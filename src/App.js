@@ -53,7 +53,7 @@ function App() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const isAuthenticated=true;
 
   return (
     <ApolloProvider client={client}>
@@ -63,7 +63,7 @@ function App() {
           <Tab icon={<LockOpen />} label="Sign in" />
           <Tab icon={<Loyalty />}  label="Programs" />
           <Tab icon={<Subject />} label="Courses" />
-          <Tab icon={<Person />} label="Users" />
+          {isAuthenticated? <Tab icon={<Person />} label="Users" />:<div/>}
       
         </Tabs>
       </AppBar>
