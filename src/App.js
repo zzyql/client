@@ -2,10 +2,10 @@ import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import './App.css';
-
+import Login from './Login'
 
 import {AppBar, Tabs, Tab, Box,Typography,makeStyles} from '@material-ui/core'
-import {LockOpen,AlbumRounded,Person,Loyalty,Subject} from '@material-ui/icons'
+import {LockOpen,Person,Loyalty,Subject} from '@material-ui/icons'
 import PropTypes from 'prop-types';
 
 
@@ -68,7 +68,7 @@ function App() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        
+        <Login/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         
