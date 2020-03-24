@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 
-export interface Program {
+export interface ProgramType {
     id: string;
     name: string;
     courses: number;
@@ -9,55 +9,55 @@ export interface Program {
     students: number;   
 }
 
-export interface Course{
+export interface CourseType{
     id: string;
     name: string;
     numOfStudent: number;
-    program: Program;
-    enrollments: Enrollment[];
-    instructings:Instructing[];
-    attendacne:Array<Attendance>;// same with Attendance[]
+    program: ProgramType;
+    enrollments: EnrollmentType[];
+    instructings:InstructingType[];
+    attendacne:Array<AttendanceType>;// same with Attendance[]
 }
 
-export interface Student{
+export interface StudentType{
     id: string
     firstName: string
     LastName: string
     email: string
     password: string
     status: string
-    program: Program
-    enrollments: Enrollment[]
-    attendances: Attendance[]
+    program: ProgramType
+    enrollments: EnrollmentType[]
+    attendances: AttendanceType[]
 }
 
-export interface Faculty{
+export interface FacultyType{
     id: string
     firstName: string
     LastName: string
     email: string
     password: string
     status: string
-    program: Program
-    instructings: Instructing[]
+    program: ProgramType
+    instructings: InstructingType[]
 }
 
-export interface Enrollment{
+export interface EnrollmentType{
     id: string
-    course: Course
-    student: Student
+    course: CourseType
+    student: StudentType
 }
 
-export interface Instructing{
+export interface InstructingType{
     id: string
-    course: Course
-    faculty: Faculty
+    course: CourseType
+    faculty: FacultyType
 }
 
-export interface Attendance{
+export interface AttendanceType{
     id: string
-    course: Course
-    student: Student
+    course: CourseType
+    student: StudentType
     time: string
 }
 

@@ -1,32 +1,37 @@
 import React, { ReactElement, Fragment } from 'react'
 import gql from 'graphql-tag';
 import { useLazyQuery ,useQuery} from '@apollo/react-hooks';
-import Program from './Program'
 
 import {ProgramType} from '../Interfaces'
 import './programList.css'
-const GET_PROGRAMS = gql`
+const GET_PROGRAM = gql`
+  query GetUser($id:string!)
   {
-    programs {
+    program(id:$id) {
       id
       name
     }
   }
 `;
 
-interface ProgramListData {
-    programs: ProgramType[];
+interface ProgramData {
+    program: ProgramType;
 }
   
-interface ProgramListVars {
-
+interface ProgramVars {
+    id: string;
 }
 interface Props {
-    
+    id:string;
 }
-export default function ProgramList({}: Props): ReactElement {
+export default function Program(props: Props): ReactElement {
 
-    const { loading, data } = useQuery<ProgramListData,ProgramListVars>(GET_PROGRAMS);
+
+
+    const { loading, data } = useQuery<ProgramData,ProgramVars>(
+        GET_PROGRAM,
+        { variables: { id: props.id } }
+    );
 
     return (
         <Fragment>
@@ -34,16 +39,10 @@ export default function ProgramList({}: Props): ReactElement {
             <p>Loading ...</p>
           ) : (
             <Fragment>
-            {data && data.programs.map(program => (
-                <li><h4 id="program-list"><Program id={program.name}/></h4></li>
-
-            ))}
+                {data?.program.id}
             </Fragment>
           )}
         </Fragment>
     )
 }
-
-
-
 

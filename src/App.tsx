@@ -53,7 +53,7 @@ class App extends Component<AppProps, AppState> {
     super(props);
   
     this.state = {
-      isAuthenticated: false,
+      isAuthenticated: true,
       isAuthenticating: true,
       value:0
     };
@@ -89,22 +89,63 @@ class App extends Component<AppProps, AppState> {
     this.setState({value:newValue});
   };
 
+
   showLoggedInBar = () => (
     <Fragment>
+      <AppBar position="static">
+        <Tabs centered value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
+          <Tab icon={<Loyalty />}  label="Programs" />
+          <Tab icon={<Subject />} label="Courses" />
+          <Tab icon={<Person />} label="Users" />
       
+        </Tabs>
+      </AppBar>
+      <TabPanel value={this.state.value} index={0}>
+        <ProgramList/>
+      </TabPanel>
+      <TabPanel value={this.state.value} index={1}>
+
+      </TabPanel>
+      <TabPanel value={this.state.value} index={2}>
+        
+      </TabPanel>
+      <TabPanel value={this.state.value} index={3}>
+        
+      </TabPanel>
     </Fragment>
   );
 
   showLoggedOutBar = () => (
     <Fragment>
-      <NavLink to="/signup">
-
+      {/*<NavLink to="/signup">
+          Sign up
         <Route path="/singup"></Route>
       </NavLink>
       <NavLink to="/login">
-
+          Login
         <Route path="/login"></Route>
-      </NavLink>
+    </NavLink>*/}
+      <AppBar position="static">
+        <Tabs centered value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
+          <Tab icon={<LockOpen />} label="Sign in" />
+          <Tab icon={<Loyalty />}  label="Login" />
+          {this.state.isAuthenticated? <Tab icon={<Person />} label="Users" />:<div/>}
+      
+        </Tabs>
+      </AppBar>
+      <TabPanel value={this.state.value} index={0}>
+        
+      </TabPanel>
+      <TabPanel value={this.state.value} index={1}>
+        <Login isAuthenticated={this.state.isAuthenticated} userHasAuthenticated={this.userHasAuthenticated}/>
+      </TabPanel>
+      <TabPanel value={this.state.value} index={2}>
+        
+      </TabPanel>
+      <TabPanel value={this.state.value} index={3}>
+        
+      </TabPanel>
+
     </Fragment>
   );
 
@@ -120,28 +161,8 @@ class App extends Component<AppProps, AppState> {
     return (
       <ApolloProvider client={client}>
       <div>
-        <AppBar position="static">
-          <Tabs centered value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
-            <Tab icon={<LockOpen />} label="Sign in" />
-            <Tab icon={<Loyalty />}  label="Programs" />
-            <Tab icon={<Subject />} label="Courses" />
-            {this.state.isAuthenticated? <Tab icon={<Person />} label="Users" />:<div/>}
-        
-          </Tabs>
-        </AppBar>
-        <TabPanel value={this.state.value} index={0}>
-          
-        </TabPanel>
-        <TabPanel value={this.state.value} index={1}>
-          <ProgramList/>
-        </TabPanel>
-        <TabPanel value={this.state.value} index={2}>
-          
-        </TabPanel>
-        <TabPanel value={this.state.value} index={3}>
-          {this.state.isAuthenticated ? this.showLoggedInBar() : this.showLoggedOutBar()}
-        </TabPanel>
-        <Routes isAuthenticated={childProps.isAuthenticated} userHasAuthenticated={childProps.userHasAuthenticated} />
+        {this.state.isAuthenticated ? this.showLoggedInBar() : this.showLoggedOutBar()}
+        {/*<Routes isAuthenticated={childProps.isAuthenticated} userHasAuthenticated={childProps.userHasAuthenticated} />*/}
       </div>
       </ApolloProvider>
     );
