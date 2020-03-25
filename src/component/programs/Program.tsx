@@ -58,7 +58,7 @@ export default function Program(props: Props): ReactElement {
         ))} 
 
         {/*this sample data is tmp data, since we don't have real data in database*/}
-        <NavLink to={"/program/"+props.program.id}>
+        <NavLink to={"/course/"+props.program.id}>
         <Typography>"{props.program.id}"</Typography>
         </NavLink>
       </ExpansionPanelDetails>

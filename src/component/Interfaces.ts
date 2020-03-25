@@ -16,7 +16,7 @@ export interface CourseType{
     program: ProgramType;
     enrollments: EnrollmentType[];
     instructings:InstructingType[];
-    attendacne:Array<AttendanceType>;// same with Attendance[]
+    attendances:Array<AttendanceType>;// same with Attendance[]
 }
 
 export interface StudentType{
