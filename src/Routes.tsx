@@ -5,6 +5,7 @@ import Login from "./component/signup/Login";
 import Signup from "./component/signup/Signup";
 import ProgramList from "./component/programs/ProgramList";
 import CourseList from "./component/courses/CourseList";
+import Course from "./component/courses/Course";
 import StudentList from "./component/students/StudentList";
 interface RouteProps {
   isAuthenticated: boolean;
@@ -19,6 +20,8 @@ export const Routes: React.FunctionComponent<RouteProps> = (childProps) =>
     <Route path="/program" exact component={ProgramList} />
     <Route path="/course" exact component={CourseList} />
     <Route path="/student" exact component={StudentList} />
+
+    <Route path="/course/:id" exact component={Course} />
     
     <Route path="/" >Not Found</Route>
   </Switch>;
