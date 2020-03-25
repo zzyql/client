@@ -4,9 +4,9 @@ import React, { Component } from 'react'
 export interface ProgramType {
     id: string;
     name: string;
-    courses: number;
-    faculties: string;
-    students: number;   
+    courses: CourseType[];
+    faculties: FacultyType[];
+    students: string[];   
 }
 
 export interface CourseType{

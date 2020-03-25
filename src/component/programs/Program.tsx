@@ -4,8 +4,10 @@ import gql from 'graphql-tag';
 import { useLazyQuery ,useQuery} from '@apollo/react-hooks';
 import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { NavLink, withRouter, Route } from "react-router-dom";
 import {ProgramType} from '../Interfaces'
 import './programList.css'
+import Course from '../courses/Course';
 
 
 interface ProgramData {
@@ -32,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 //this component get program type as props and display program infomation
 export default function Program(props: Props): ReactElement {
+  
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const handleClick = () => {
@@ -48,7 +51,16 @@ export default function Program(props: Props): ReactElement {
         <Typography className={classes.heading}>{props.program.name}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <Typography> {props.program.id} </Typography>
+        {props.program.courses?.map(course=>(
+          <NavLink to="/program">
+          <Typography>"{course.name}"</Typography>
+          </NavLink>
+        ))} 
+
+        {/*this sample data is tmp data, since we don't have real data in database*/}
+        <NavLink to={"/program/"+props.program.id}>
+        <Typography>"{props.program.id}"</Typography>
+        </NavLink>
       </ExpansionPanelDetails>
     </ExpansionPanel>
 
