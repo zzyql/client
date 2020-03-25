@@ -35,7 +35,7 @@ export default function ProgramList({}: Props): ReactElement {
           ) : (
             <Fragment>
             {data && data.programs.map(program => (
-                <li><h4 id="program-list"><Program id={program.name}/></h4></li>
+                <li key={program.id} className="program-list"> <Program program={program}/> </li>
 
             ))}
             </Fragment>

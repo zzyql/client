@@ -92,6 +92,7 @@ class App extends Component<AppProps, AppState> {
 
   showLoggedInBar = () => (
     <Fragment>
+    {/*
       <AppBar position="static">
         <Tabs centered value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
           <Tab icon={<Loyalty />}  label="Programs" />
@@ -112,19 +113,37 @@ class App extends Component<AppProps, AppState> {
       <TabPanel value={this.state.value} index={3}>
         
       </TabPanel>
+      */}
+      <NavLink to="/">
+          Home
+      </NavLink>
+
+      <NavLink to="/program">
+          Program
+      </NavLink>
+
+      <NavLink to="/course">
+          Course
+      </NavLink>
+
+      <NavLink to="/student">
+          User
+      </NavLink>
+
     </Fragment>
   );
 
   showLoggedOutBar = () => (
     <Fragment>
-      {/*<NavLink to="/signup">
-          Sign up
-        <Route path="/singup"></Route>
+      <NavLink to="/">
+          Home
       </NavLink>
+
       <NavLink to="/login">
           Login
-        <Route path="/login"></Route>
-    </NavLink>*/}
+        {/*<Route path="/login"></Route>*/}
+    </NavLink>
+    {/*
       <AppBar position="static">
         <Tabs centered value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
           <Tab icon={<LockOpen />} label="Sign in" />
@@ -145,7 +164,7 @@ class App extends Component<AppProps, AppState> {
       <TabPanel value={this.state.value} index={3}>
         
       </TabPanel>
-
+      */}
     </Fragment>
   );
 
@@ -162,7 +181,7 @@ class App extends Component<AppProps, AppState> {
       <ApolloProvider client={client}>
       <div>
         {this.state.isAuthenticated ? this.showLoggedInBar() : this.showLoggedOutBar()}
-        {/*<Routes isAuthenticated={childProps.isAuthenticated} userHasAuthenticated={childProps.userHasAuthenticated} />*/}
+        <Routes isAuthenticated={childProps.isAuthenticated} userHasAuthenticated={childProps.userHasAuthenticated} />
       </div>
       </ApolloProvider>
     );

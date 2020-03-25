@@ -13,7 +13,7 @@ export default class Home extends Component<Props, State> {
     render() {
         return (
             <div>
-                
+                Welcome
             </div>
         )
     }

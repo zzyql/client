@@ -1,18 +1,12 @@
-import React, { ReactElement, Fragment } from 'react'
+import React, { ReactElement, Fragment,useState } from 'react'
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import gql from 'graphql-tag';
 import { useLazyQuery ,useQuery} from '@apollo/react-hooks';
-
+import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {ProgramType} from '../Interfaces'
 import './programList.css'
-const GET_PROGRAM = gql`
-  query GetUser($id:string!)
-  {
-    program(id:$id) {
-      id
-      name
-    }
-  }
-`;
+
 
 interface ProgramData {
     program: ProgramType;
@@ -22,27 +16,44 @@ interface ProgramVars {
     id: string;
 }
 interface Props {
-    id:string;
+    program:ProgramType;
 }
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  }),
+);
+
+//this component get program type as props and display program infomation
 export default function Program(props: Props): ReactElement {
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+  return (
+    <div className={classes.root}>
+    <ExpansionPanel>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id={props.program.id}
+      >
+        <Typography className={classes.heading}>{props.program.name}</Typography>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <Typography> {props.program.id} </Typography>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
 
 
-
-    const { loading, data } = useQuery<ProgramData,ProgramVars>(
-        GET_PROGRAM,
-        { variables: { id: props.id } }
-    );
-
-    return (
-        <Fragment>
-        {loading ? (
-            <p>Loading ...</p>
-          ) : (
-            <Fragment>
-                {data?.program.id}
-            </Fragment>
-          )}
-        </Fragment>
-    )
+    </div>
+  )
 }
 
