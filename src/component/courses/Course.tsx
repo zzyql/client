@@ -5,12 +5,9 @@ import { CourseType } from '../Interfaces';
 
 
 const Get_COURSE = gql`
-  query Get_COURSE($coure_id: string!) {
+  query Get_COURSE($coure_id: ID!) {
     course(where: {id:$coure_id}) {
       id
-      model
-      year
-      stock
     }
   }
 `;
