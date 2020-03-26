@@ -7,6 +7,7 @@ import ProgramList from "./component/programs/ProgramList";
 import CourseList from "./component/courses/CourseList";
 import Course from "./component/courses/Course";
 import StudentList from "./component/students/StudentList";
+import Student from "./component/students/Student";
 interface RouteProps {
   isAuthenticated: boolean;
   userHasAuthenticated: (authenticated: boolean) => void;
@@ -20,6 +21,7 @@ export const Routes: React.FunctionComponent<RouteProps> = (childProps) =>
     <Route path="/program" exact component={ProgramList} />
     <Route path="/course/:id" exact component={Course} />
     <Route path="/course" exact component={CourseList} />
+    <Route path="/student/:id" exact component={Student} />
     <Route path="/student" exact component={StudentList} />
 
     
