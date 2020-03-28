@@ -15,17 +15,29 @@ const GET_STUDENT=gql`
             id
             name
         }
-        enrollments{
+        enrollments(where:{
+            course:{
+                enrollments_every:{
+                    student:{id:"1111111"}
+                }
+            }
+        }){
             id
             course{
                 id
                 name
+                attendances(where:{
+                    student:{
+                        enrollments_every:{
+                        student:{id:"1111111"}
+                    }
+                }
+                }){
+                    time
+                }
             }
         }
-        attendances{
-            id
-            time
-        }
+        
     }
   }
 `;
@@ -58,11 +70,14 @@ export default function Student(props: Props): ReactElement {
             
             <li>{data && data.student.email}</li>
             {data && data.student.enrollments.map(enrollment=>(
-                enrollment.course.name
+                <div>
+                    <li>{enrollment.course.name}</li>
+                    <li>{enrollment.course.attendances.map(att=>(
+                        <li>{att.time}</li>
+                    ))}</li>
+                </div>
             ))}
-            {data && data.student.attendances.map(attendance=>(
-                attendance.time
-            ))}
+            
             </Fragment>
           )}
         </div>
