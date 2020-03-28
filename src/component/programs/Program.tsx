@@ -51,16 +51,14 @@ export default function Program(props: Props): ReactElement {
         <Typography className={classes.heading}>{props.program.name}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
+        <li>
         {props.program.courses?.map(course=>(
-          <NavLink to="/program">
-          <Typography>"{course.name}"</Typography>
-          </NavLink>
-        ))} 
+          <NavLink to={"/course/"+course.id}>
+          <Typography>{course.name}</Typography>
+          </NavLink> 
+        ))}
+        </li>
 
-        {/*this sample data is tmp data, since we don't have real data in database*/}
-        <NavLink to={"/course/"+props.program.id}>
-        <Typography>"{props.program.id}"</Typography>
-        </NavLink>
       </ExpansionPanelDetails>
     </ExpansionPanel>
 

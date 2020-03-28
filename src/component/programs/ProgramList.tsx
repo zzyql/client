@@ -10,6 +10,10 @@ const GET_PROGRAMS = gql`
     programs {
       id
       name
+      courses{
+        id
+        name
+      }
     }
   }
 `;
