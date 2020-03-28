@@ -5,11 +5,11 @@ import { NavLink } from 'react-router-dom';
 import { StudentType } from '../Interfaces';
 
 const GET_STUDENTS = gql`
-  query GET_STUDENTS($course_id:string){
-    students(course_id:$course_id){
+  {
+    students{
       id
-      first_name
-      last_name
+      firstName
+      LastName
     }
   }
 `;
@@ -18,7 +18,7 @@ interface StudentListData {
 }
   
 interface StudentListVars {
-    course_id:string;
+    student_id:string;
 }
 
 interface Props {
@@ -27,8 +27,7 @@ interface Props {
 
 export default function StudentList(props: Props): ReactElement {
     const{loading,data}= useQuery<StudentListData,StudentListVars>(
-        GET_STUDENTS,
-        {variables:{course_id:props.match.params.id}}
+        GET_STUDENTS
     );
     return (
         <div>
@@ -37,7 +36,6 @@ export default function StudentList(props: Props): ReactElement {
                 <p>Loading ...</p>
               ) : (
                 <Fragment>
-                
                 {data && data.students.map(student => (
                     <li key={student.id} className="student-list"> 
                     <NavLink to={"/student/"+student.id}> {student.firstName} {student.LastName}</NavLink>

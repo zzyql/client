@@ -1,14 +1,31 @@
 import React, { ReactElement, Fragment } from 'react'
 import { StudentType } from '../Interfaces'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost';
+import  gql  from 'graphql-tag';
 
 const GET_STUDENT=gql`
-    query GET_STUDENT($student_id:string){
-    students(course_id:$course_id){
-      id
-      first_name
-      last_name
+    query GET_STUDENT($student_id:ID){
+    student(where:{id:$student_id}){
+        id
+        firstName
+        LastName
+        email
+        status
+        program{
+            id
+            name
+        }
+        enrollments{
+            id
+            course{
+                id
+                name
+            }
+        }
+        attendances{
+            id
+            time
+        }
     }
   }
 `;
@@ -24,7 +41,7 @@ interface Props {
 }
 
 export default function Student(props: Props): ReactElement {
-    
+    console.log(props.match.params.id)
     const{loading,data}=useQuery<StudentData,StudentVars>(
         GET_STUDENT,
         {variables:{student_id:props.match.params.id}}
@@ -35,12 +52,13 @@ export default function Student(props: Props): ReactElement {
             <p>Loading ...</p>
           ) : (
             <Fragment>
-            {"course list.."}
-            {data && data.student.firstName}
-            {data && data.student.LastName}
-            {data && data.student.email}
+            
+            {console.log(data)}
+            <li>{data && data.student.firstName} {data && data.student.LastName}</li>
+            
+            <li>{data && data.student.email}</li>
             {data && data.student.enrollments.map(enrollment=>(
-                enrollment.course
+                enrollment.course.name
             ))}
             {data && data.student.attendances.map(attendance=>(
                 attendance.time
