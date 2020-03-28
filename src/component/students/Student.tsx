@@ -26,13 +26,7 @@ const GET_STUDENT=gql`
             course{
                 id
                 name
-                attendances(where:{
-                    student:{
-                        enrollments_every:{
-                        student:{id:"1111111"}
-                    }
-                }
-                }){
+                attendances{
                     time
                 }
             }
