@@ -56,7 +56,7 @@ class App extends Component<AppProps, AppState> {
       value:0
     };
 
-    document.title = "Bookstore Demo"
+    document.title = "Pi-Client Demo"
   }
   async componentDidMount() {
     // try {
