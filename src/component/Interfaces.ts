@@ -70,3 +70,22 @@ export const type = {
     instructing: "Instructing",
     attendance: "Attendance",
 }
+
+
+
+export interface AttendanceSubscriptionPayload {
+    mutation: MutationType
+    node: AttendanceType
+    updatedFields: string[]
+    previousValues: AttendancePreviousValues
+}
+
+export enum  MutationType {
+    CREATED,
+    UPDATED,
+    DELETED,
+}
+export interface AttendancePreviousValues{
+    id: string
+    time: string
+}

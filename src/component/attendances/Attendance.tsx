@@ -1,25 +1,38 @@
 import React, { ReactElement } from 'react'
-import { gql } from 'apollo-boost'
+import { useSubscription } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { AttendanceSubscriptionPayload} from '../Interfaces';
 
 
 const GET_ATTENDANCE=gql`
-    query GET_ATTENDANCE($course_id:string,$student_id:string){
-        attendance(course_id:$course_id,student_id:$student_id){
-            
+    subscription GET_ATTENDANCE{
+        attendance{
+            mutation
+            node{
+                time
+                student{
+                    id
+                    firstName
+                }
+            }
         }
     }
+  
 `;
 
-interface Props {
-    course_id:string;
-    student_id:string;
+interface CheckIn{
+    attendance:AttendanceSubscriptionPayload
 }
 
-export default function Attendance(props: Props): ReactElement {
+interface Props {
+   
+}
 
+export default function Attendance({}: Props): ReactElement{
+    const { loading, data } = useSubscription<CheckIn>(GET_ATTENDANCE);
     return (
         <div>
-            
+            {loading ? 'Loading...' : data!.attendance.node.time}
         </div>
     )
 }

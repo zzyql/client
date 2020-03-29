@@ -1,15 +1,16 @@
 import React ,{Component,Fragment}from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
 import { NavLink, withRouter, Route } from "react-router-dom";
 import {AppBar, Tabs, Tab, Box,Typography,makeStyles} from '@material-ui/core'
 import {LockOpen,Person,Loyalty,Subject} from '@material-ui/icons'
 import PropTypes from 'prop-types';
 import { Routes } from "./Routes";
-
+import client from './Client'
 import Login from './component/signup/Login'
 import ProgramList from './component/programs/ProgramList'
 import './App.css';
+
+
 interface AppProps {
   history: any;
 }
@@ -21,9 +22,6 @@ interface AppState {
 }
 
 
-const client = new ApolloClient({
-  uri: 'https://pi-project-097921097e.herokuapp.com/pi-project/dev/',
-});
 
 function TabPanel(props:any) {
   const { children, value, index, ...other } = props;
@@ -168,11 +166,12 @@ class App extends Component<AppProps, AppState> {
     </Fragment>
   );
 
+  
 
 
-
- 
+  
   render(){
+
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated

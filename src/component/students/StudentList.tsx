@@ -1,5 +1,5 @@
 import React, { ReactElement, Fragment } from 'react'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag';
 import { NavLink } from 'react-router-dom';
 import { StudentType } from '../Interfaces';
