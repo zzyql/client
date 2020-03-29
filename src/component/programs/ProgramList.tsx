@@ -2,7 +2,7 @@ import React, { ReactElement, Fragment } from 'react'
 import gql from 'graphql-tag';
 import { useLazyQuery ,useQuery} from '@apollo/react-hooks';
 import Program from './Program'
-
+import {List,ListItem,Collapse,Typography} from '@material-ui/core';
 import {ProgramType} from '../Interfaces'
 import './programList.css'
 const GET_PROGRAMS = gql`
@@ -38,10 +38,12 @@ export default function ProgramList({}: Props): ReactElement {
             <p>Loading ...</p>
           ) : (
             <Fragment>
+            <List>
             {data && data.programs.map(program => (
-                <li key={program.id} className="program-list"> <Program program={program}/> </li>
+                <ListItem key={program.id} className="program-list"> <Program program={program}/> </ListItem>
 
             ))}
+            </List>
             </Fragment>
           )}
         </Fragment>
