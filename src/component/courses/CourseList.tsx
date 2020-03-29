@@ -4,7 +4,7 @@ import { CourseType } from '../Interfaces'
 import gql from 'graphql-tag';
 import Course from './Course';
 import { NavLink } from 'react-router-dom';
-
+import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem} from '@material-ui/core';
 const GET_COURSES = gql`
   {
     courses {
@@ -33,12 +33,14 @@ export default function CourseList(props: Props): ReactElement {
             <p>Loading ...</p>
           ) : (
             <Fragment>
-            {"course list.."}
-            {data && data.courses.map(course => (
-                <li key={course.id} className="course-list"> 
-                    <NavLink to={"/course/"+course.id}> {course.name}</NavLink>
-                </li>
-            ))}
+            course list
+            <List>
+              {data && data.courses.map(course => (
+                <ListItem key={course.id} className="course-list"> 
+                  <NavLink to={"/course/"+course.id}> {course.name}</NavLink>
+                </ListItem>
+              ))}
+            </List>
             </Fragment>
           )}
         </div>

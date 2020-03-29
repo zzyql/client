@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { CourseType } from '../Interfaces';
 import { NavLink } from 'react-router-dom';
-
+import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem} from '@material-ui/core';
 
 const Get_COURSE = gql`
   query Get_COURSE($coure_id: ID!) {
@@ -47,25 +47,36 @@ export default function Course(props: Props): ReactElement {
 
 
     return (
-        <div>
+        <Fragment>
         {loading ? (
           <p>Loading ...</p>
         ) : (
           <Fragment>
           
-          {console.log(data)}
-          <li>{data && data.course.id} </li>
-          <li>{data && data.course.program.name} </li>
-          <li>{data && data.course.name} </li>
-          <li>{data && data.course.numOfStudent} </li>
-          <li>{data && data.course.enrollments.map(enrollment=>(
+          <Typography variant="h5" gutterBottom>
+            Course ID: {data && data.course.id}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Program name: {data && data.course.program.name}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Course name: {data && data.course.name}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Students: {data && data.course.numOfStudent}
+          </Typography>
+          
+          Student List
+          {data && data.course.enrollments.map(enrollment=>(
             <NavLink to={"/student/"+enrollment.student.id}>
-            <li>{enrollment.student.firstName} {enrollment.student.LastName}</li>
+            <ListItem key={enrollment.student.id}>
+              {enrollment.student.firstName} {enrollment.student.LastName}
+            </ListItem>
             </NavLink>
           ))} 
-          </li>
+          
           </Fragment>
         )}
-        </div>
+        </Fragment>
     )
 }

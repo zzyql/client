@@ -2,7 +2,7 @@ import React, { ReactElement, Fragment,useState } from 'react'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import gql from 'graphql-tag';
 import { useLazyQuery ,useQuery} from '@apollo/react-hooks';
-import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography } from '@material-ui/core';
+import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { NavLink, withRouter, Route } from "react-router-dom";
 import {ProgramType} from '../Interfaces'
@@ -51,14 +51,17 @@ export default function Program(props: Props): ReactElement {
         <Typography className={classes.heading}>{props.program.name}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <li>
+      <List>
+        
         {props.program.courses?.map(course=>(
-          <NavLink to={"/course/"+course.id}>
-          <Typography>{course.name}</Typography>
-          </NavLink> 
+          <ListItem key={course.id}>
+            <NavLink to={"/course/"+course.id}>
+            <Typography>{course.name}</Typography>
+            </NavLink> 
+          </ListItem>
         ))}
-        </li>
-
+        
+      </List>
       </ExpansionPanelDetails>
     </ExpansionPanel>
 
