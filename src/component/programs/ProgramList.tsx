@@ -7,7 +7,7 @@ import {ProgramType} from '../Interfaces'
 import './programList.css'
 const GET_PROGRAMS = gql`
   {
-    programs {
+    programs(orderBy:name_ASC) {
       id
       name
       courses{

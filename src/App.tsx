@@ -1,7 +1,7 @@
 import React ,{Component,Fragment}from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { NavLink, withRouter, Route } from "react-router-dom";
-import {AppBar, Tabs, Tab, Box,Typography,makeStyles} from '@material-ui/core'
+import {AppBar, Tabs, Tab, Box,Typography,makeStyles,Breadcrumbs } from '@material-ui/core'
 import {LockOpen,Person,Loyalty,Subject} from '@material-ui/icons'
 import PropTypes from 'prop-types';
 import { Routes } from "./Routes";
@@ -90,6 +90,7 @@ class App extends Component<AppProps, AppState> {
 
   showLoggedInBar = () => (
     <Fragment>
+    <Breadcrumbs aria-label="breadcrumb">
     {/*
       <AppBar position="static">
         <Tabs centered value={this.state.value} onChange={this.handleChange} aria-label="simple tabs example">
@@ -112,6 +113,7 @@ class App extends Component<AppProps, AppState> {
         
       </TabPanel>
       */}
+      
       <NavLink to="/">
           Home
       </NavLink>
@@ -128,11 +130,20 @@ class App extends Component<AppProps, AppState> {
           User
       </NavLink>
 
+      <NavLink to="/program/create">
+          Create program
+      </NavLink>
+
+      <NavLink to="/course/create">
+          Create Course
+      </NavLink>
+      </Breadcrumbs>
     </Fragment>
   );
 
   showLoggedOutBar = () => (
     <Fragment>
+    <Breadcrumbs aria-label="breadcrumb">
       <NavLink to="/">
           Home
       </NavLink>
@@ -163,6 +174,7 @@ class App extends Component<AppProps, AppState> {
         
       </TabPanel>
       */}
+      </Breadcrumbs>
     </Fragment>
   );
 
