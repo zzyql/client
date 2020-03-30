@@ -118,15 +118,15 @@ class App extends Component<AppProps, AppState> {
           Home
       </NavLink>
 
-      <NavLink to="/program">
+      <NavLink to="/programs">
           Program
       </NavLink>
 
-      <NavLink to="/course">
+      <NavLink to="/courses">
           Course
       </NavLink>
 
-      <NavLink to="/student">
+      <NavLink to="/students">
           User
       </NavLink>
 

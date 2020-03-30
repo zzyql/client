@@ -104,6 +104,18 @@ export const GET_PROGRAMS = gql`
   }
 }
 `;
+export const GET_PROGRAM = gql`
+query GET_PROGRAM($id:ID){
+  program(where:{id:$id}){
+    id
+    name
+    courses{
+      id
+      name
+    }
+  }
+}
+`;
 
 export const CREATE_PROGRAM=gql`
     mutation CREATE_PROGRAM($id:ID!,$name:String!){
@@ -118,7 +130,17 @@ export const CREATE_PROGRAM=gql`
 
 `;
 
+export const UPDATE_PROGRAM=gql`
+    mutation UPDATE_PROGRAM($id:ID!,$name:String!){
+        updateProgram(where:{id:$id},
+            data:{name:$name}
+        ){
+            id
+            name
+        }
+    }
 
+`;
 
 
 
@@ -153,7 +175,7 @@ export const GET_COURSES = gql`
   }
 `;
 
-export const Get_COURSE = gql`
+export const GET_COURSE = gql`
   query Get_COURSE($coure_id: ID!) {
     course(where: {id:$coure_id}) {
       id
@@ -172,4 +194,17 @@ export const Get_COURSE = gql`
 
     }
   }
+`;
+
+
+export const UPDATE_COURSE=gql`
+    mutation UPDATE_COURSE($id:ID!,$name:String!){
+        updateCourse(where:{id:$id},
+            data:{name:$name}
+        ){
+            id
+            name
+        }
+    }
+
 `;

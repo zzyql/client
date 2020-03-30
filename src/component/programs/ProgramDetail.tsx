@@ -6,8 +6,10 @@ import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { NavLink, withRouter, Route } from "react-router-dom";
 import {ProgramType} from '../Interfaces'
+import {GET_PROGRAM} from '../Query'
 import './programList.css'
 import Course from '../courses/Course';
+import UpdateProgram from './UpdateProgram';
 
 
 interface ProgramData {
@@ -18,43 +20,58 @@ interface ProgramVars {
     id: string;
 }
 interface Props {
-    program:ProgramType;
+    match:any
 }
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  }),
-);
+
 
 //this component get program type as props and display program infomation
 export default function Program(props: Props): ReactElement {
   
-  const classes = useStyles();
+
   const [open, setOpen] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const { loading, data } = useQuery<ProgramData, ProgramVars>(
+    GET_PROGRAM,
+    { variables: { id: props.match.params.id } }
+  );
   const handleClick = () => {
     setOpen(!open);
   };
+
+
+
   return (
-    <div className={classes.root}>
+    <div>
+    {update?
+      <div>
+      {data&&<UpdateProgram program={data.program}/>}
+      </div>:
+    
+    
+      <div>
+    <Typography variant="h5" gutterBottom>
+    Program ID: {data && data?.program.id}
+    </Typography>
+
+    <Typography variant="h5" gutterBottom>
+    Program name: {data && data?.program.name}
+    </Typography>
+
+
+    <Button onClick={()=>setUpdate(!update)}>update</Button>
     <ExpansionPanel>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
-        id={props.program.id}
+        id={data?.program.id}
       >
-        <Typography className={classes.heading}>{props.program.name}</Typography>
-        <Button href={`/program/`+props.program.id}>detail</Button>
+        <Typography >{data?.program.name} Course List</Typography>
+        
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
       <List>
         
-        {props.program.courses?.map(course=>(
+        {data?.program.courses?.map(course=>(
           <ListItem key={course.id}>
             <NavLink to={"/course/"+course.id}>
             <Typography>{course.name}</Typography>
@@ -65,9 +82,10 @@ export default function Program(props: Props): ReactElement {
       </List>
       </ExpansionPanelDetails>
     </ExpansionPanel>
-
-
     </div>
+    }
+    </div>
+
   )
 }
 

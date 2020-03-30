@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react'
-import { TextField, Button, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { TextField, Button, InputLabel, Select, MenuItem, Typography } from '@material-ui/core'
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { ProgramType, StudentType } from '../Interfaces';
@@ -66,66 +66,82 @@ export default function Signup({}: Props): ReactElement {
     }
     return (
         <div>
-            
+        <h3>Sign Up</h3>
             {error ? <p>Oh no! {error.message}</p> : null}
-            {data && data.createStudent ? 
-                <p>Saved!</p> : 
+            {data && data.createStudent 
+                ? 
             <div>
-            <form>
-           <TextField
-             placeholder="Enter your first name"
-             label="First Name"
-             value={firstName}
-             onChange={e=>{
-                 setFirstName(e.target.value)
-                 genEmail(firstName,lastName,genID(1111,9999))
+            <p>Saved!</p> 
+            <Typography variant="h5" gutterBottom>
+                Student ID: {data && data.createStudent.id}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+                Student name: {data && data.createStudent.firstName} {data.createStudent.LastName}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+                Student Email: {data && data.createStudent.email}
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+                Status: {data && data.createStudent.status}
+            </Typography>
+            </div>
+                : 
+            <div>
+                <form>
+                <TextField
+                    placeholder="Enter your first name"
+                    label="First Name"
+                    value={firstName}
+                    onChange={e=>{
+                        setFirstName(e.target.value)
+                        genEmail(firstName,lastName,genID(1111,9999))
+                        }}
+                    />
+                <br/>
+                <TextField
+                placeholder="Enter your last name"
+                label="Last Name"
+                value={lastName}
+                onChange={e=>{
+                    setLastName(e.target.value)
+                    genEmail(firstName,lastName,genID(1111,9999))
                 }}
-             />
-           <br/>
-            <TextField
-            placeholder="Enter your last name"
-            label="Last Name"
-            value={lastName}
-            onChange={e=>{
-                setLastName(e.target.value)
-                genEmail(firstName,lastName,genID(1111,9999))
-            }}
-            />
-            <br/>
-            <TextField
-            placeholder="Enter your password"
-            type="password"
-            label="Password"
-            value={password}
-            onChange={e=>{
-                setPassword(e.target.value)
-                genEmail(firstName,lastName,genID(1111,9999))
-            }}
-            />
-            <br/>
-            <InputLabel >Program</InputLabel>
-            <Select value={program} onChange={(e)=>{
-                setProgram(e.target.value as string)
-                genEmail(firstName,lastName,genID(1111,9999))
-            }}>
-            {result.loading?(
-                    <MenuItem  disabled>loading....</MenuItem >
-            ):(
-                result.data?.programs.map(program=>(
-                    <MenuItem  key={program.id} value={program.id}>
-                        {program.name}
-                    </MenuItem >
-                ))
-            )}
-            </Select>
-            <br/>
-            <Button color="primary" variant="text" onClick={() => 
-                
-                id && firstName && lastName && email && program && saveStudent()}>
-                Sign Up
-            </Button>
+                />
+                <br/>
+                <TextField
+                placeholder="Enter your password"
+                type="password"
+                label="Password"
+                value={password}
+                onChange={e=>{
+                    setPassword(e.target.value)
+                    genEmail(firstName,lastName,genID(1111,9999))
+                }}
+                />
+                <br/>
+                <InputLabel >Program</InputLabel>
+                <Select value={program} onChange={(e)=>{
+                    setProgram(e.target.value as string)
+                    genEmail(firstName,lastName,genID(1111,9999))
+                }}>
+                {result.loading?(
+                        <MenuItem  disabled>loading....</MenuItem >
+                ):(
+                    result.data?.programs.map(program=>(
+                        <MenuItem  key={program.id} value={program.id}>
+                            {program.name}
+                        </MenuItem >
+                    ))
+                )}
+                </Select>
+                <br/>
+                <Button color="primary" variant="text" onClick={() => 
+                    
+                    id && firstName && lastName && email && program && saveStudent()}>
+                    Sign Up
+                </Button>
             </form>
-         </div>
+            </div>
             }
         </div>
     )

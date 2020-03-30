@@ -1,10 +1,11 @@
-import React, { ReactElement, Fragment } from 'react'
+import React, { ReactElement, Fragment, useState } from 'react'
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { CourseType } from '../Interfaces';
 import { NavLink } from 'react-router-dom';
-import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem} from '@material-ui/core';
-import {Get_COURSE} from '../Query'
+import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem, Button} from '@material-ui/core';
+import {GET_COURSE} from '../Query'
+import UpdateCourse from './UpdateCourse';
 
 
 interface CourseData{
@@ -20,17 +21,17 @@ interface Props {
 
 export default function Course(props: Props): ReactElement {
     console.log(props.match.params.id)
-
+    const [update, setUpdate] = useState(false);
     const { loading, data } = useQuery<CourseData, CourseVars>(
-        Get_COURSE,
+        GET_COURSE,
         { variables: { coure_id: props.match.params.id } }
       );
 
 
     return (
         <Fragment>
-        {loading ? (
-          <p>Loading ...</p>
+        {update ? (
+          data && <UpdateCourse course={data.course}></UpdateCourse>
         ) : (
           <Fragment>
           
@@ -56,8 +57,12 @@ export default function Course(props: Props): ReactElement {
             </NavLink>
           ))} 
           
+
+          <Button onClick={()=>setUpdate(!update)}>update</Button>
           </Fragment>
+
         )}
+        
         </Fragment>
     )
 }
