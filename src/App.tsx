@@ -137,6 +137,10 @@ class App extends Component<AppProps, AppState> {
       <NavLink to="/course/create">
           Create Course
       </NavLink>
+
+      <NavLink to="/signup">
+          Sign Up
+      </NavLink>
       </Breadcrumbs>
     </Fragment>
   );

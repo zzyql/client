@@ -72,7 +72,7 @@ export default function CreateProgram({}: Props): ReactElement {
     
     return (
         <div>
-        <h3>Add a Program</h3>
+        <h3>Add a Course</h3>
             {error ? <p>Oh no! {error.message}</p> : null}
             {data && data.createCourse ? <p>Saved!</p> : null}
 
@@ -118,7 +118,7 @@ export default function CreateProgram({}: Props): ReactElement {
 
         <br/>
         <Button color="primary" variant="text" onClick={() => id && name && numOfStudent && program && saveCourse()}>
-            Create Program
+            Create Course
         </Button>
         </div>
         </form>

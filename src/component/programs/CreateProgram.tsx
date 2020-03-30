@@ -45,29 +45,29 @@ export default function CreateProgram({}: Props): ReactElement {
         <div>
         <h3>Add a Program</h3>
             {error ? <p>Oh no! {error.message}</p> : null}
-            {data && data.createProgram ? <p>Saved!</p> : null}
-
-        <form>
-        <div className="CreateProgram">
-        <TextField
-        placeholder="Enter the Program name"
-        label="Program Name"
-        value={name}
-        onChange={e=>setName(e.target.value)}
-        />
-        <br/>
-        <TextField
-        placeholder="Enter program ID"
-        label="Program ID"
-        value={id}
-        onChange={e=>setID(e.target.value)}
-        />
-        <br/>
-        <Button color="primary" variant="text" onClick={() => id && name &&  saveProgram()}>
-            Create Program
-        </Button>
-        </div>
-        </form>
+            {data && data.createProgram ? 
+                <p>Saved!</p> : 
+         
+                <div className="CreateProgram">
+                <TextField
+                placeholder="Enter the Program name"
+                label="Program Name"
+                value={name}
+                onChange={e=>setName(e.target.value)}
+                />
+                <br/>
+                <TextField
+                placeholder="Enter program ID"
+                label="Program ID"
+                value={id}
+                onChange={e=>setID(e.target.value)}
+                />
+                <br/>
+                <Button color="primary" variant="text" onClick={() => id && name &&  saveProgram()}>
+                    Create Program
+                </Button>
+                </div>
+            }
 
         </div>
     )
