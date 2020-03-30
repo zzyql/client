@@ -3,16 +3,8 @@ import { useQuery} from '@apollo/react-hooks'
 import gql from 'graphql-tag';
 import { NavLink } from 'react-router-dom';
 import { StudentType } from '../Interfaces';
+import { GET_STUDENTS } from '../Query';
 
-const GET_STUDENTS = gql`
-  {
-    students{
-      id
-      firstName
-      LastName
-    }
-  }
-`;
 interface StudentListData {
     students: StudentType[];
 }

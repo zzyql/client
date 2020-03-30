@@ -5,14 +5,7 @@ import gql from 'graphql-tag';
 import Course from './Course';
 import { NavLink } from 'react-router-dom';
 import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem} from '@material-ui/core';
-const GET_COURSES = gql`
-  {
-    courses {
-      id
-      name
-    }
-  }
-`;
+import {GET_COURSES} from '../Query'
 interface CourseListData {
     courses: CourseType[];
 }

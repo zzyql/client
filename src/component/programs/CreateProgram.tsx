@@ -4,23 +4,12 @@ import gql from 'graphql-tag';
 import { useMutation  } from '@apollo/react-hooks';
 
 import {ProgramType} from '../Interfaces'
-
+import {CREATE_PROGRAM} from '../Query'
 interface Props {
     
 }
 
-const CREATE_PROGRAM=gql`
-    mutation CREATE_PROGRAM($id:ID!,$name:String!){
-        createProgram(data:{
-            id:$id
-            name:$name
-        }){
-            id
-            name
-        }
-    }
 
-`;
 interface ProgramData{
     createProgram:ProgramType
 }

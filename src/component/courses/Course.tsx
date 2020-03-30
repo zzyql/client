@@ -4,27 +4,8 @@ import gql from 'graphql-tag';
 import { CourseType } from '../Interfaces';
 import { NavLink } from 'react-router-dom';
 import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem} from '@material-ui/core';
+import {Get_COURSE} from '../Query'
 
-const Get_COURSE = gql`
-  query Get_COURSE($coure_id: ID!) {
-    course(where: {id:$coure_id}) {
-      id
-      name
-      numOfStudent
-      program{
-        name
-      }
-      enrollments{
-        student{
-          id
-          firstName
-          LastName
-        }
-      }
-
-    }
-  }
-`;
 
 interface CourseData{
     course:CourseType

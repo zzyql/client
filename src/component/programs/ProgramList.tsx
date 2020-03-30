@@ -5,18 +5,7 @@ import Program from './Program'
 import {List,ListItem,Collapse,Typography} from '@material-ui/core';
 import {ProgramType} from '../Interfaces'
 import './programList.css'
-const GET_PROGRAMS = gql`
-  {
-    programs(orderBy:name_ASC) {
-      id
-      name
-      courses{
-        id
-        name
-      }
-    }
-  }
-`;
+import {GET_PROGRAMS} from '../Query'
 
 interface ProgramListData {
     programs: ProgramType[];

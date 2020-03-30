@@ -7,62 +7,12 @@ import {List,ListItem,Collapse,Typography} from '@material-ui/core';
 
 
 import Attendance from '../attendances/Attendance';
-
+import { GET_ATTENDANCE, GET_STUDENT } from '../Query';
 
 interface CheckIn{
     attendance:AttendanceSubscriptionPayload
 }
-const GET_ATTENDANCE=gql`
-    subscription GET_ATTENDANCE{
-        attendance{
-            mutation
-            node{
-                student{
-                    enrollments{
-                        course{
-                            attendances{
-                                time
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-  
-`;
-const GET_STUDENT=gql`
-    query GET_STUDENT($student_id:ID){
-    student(where:{id:$student_id}){
-        id
-        firstName
-        LastName
-        email
-        status
-        program{
-            id
-            name
-        }
-        enrollments(where:{
-            course:{
-                enrollments_every:{
-                    student:{id:"1111111"}
-                }
-            }
-        }){
-            id
-            course{
-                id
-                name
-                attendances{
-                    time
-                }
-            }
-        }
-        
-    }
-  }
-`;
+
 interface StudentData{
     student:StudentType;
 }

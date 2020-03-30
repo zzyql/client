@@ -4,39 +4,12 @@ import gql from 'graphql-tag';
 import { useMutation, useQuery  } from '@apollo/react-hooks';
 
 import {CourseType,ProgramType} from '../Interfaces'
-
+import {CREATE_COURSE,GET_PROGRAMS} from '../Query'
 interface Props {
     
 }
-const GET_PROGRAMS = gql`
-  {
-    programs(orderBy:name_ASC) {
-      id
-      name
-    }
-  }
-`;
-const CREATE_COURSE=gql`
-    mutation CREATE_COURSE($id:ID!,$name:String!,$NOS:Int!,$program_id:ID){
-        createCourse(data:{
-            id:$id
-            name:$name
-            numOfStudent:$NOS
-            program:{
-                connect:{id:$program_id}
-            }
-        }){
-            id
-            name
-            numOfStudent
-            program{
-                id
-                name
-            }
-        }
-    }
 
-`;
+
 interface ProgramListData {
     programs: ProgramType[];
 }

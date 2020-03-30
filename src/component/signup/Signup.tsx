@@ -3,40 +3,8 @@ import { TextField, Button, InputLabel, Select, MenuItem } from '@material-ui/co
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { ProgramType, StudentType } from '../Interfaces';
-const GET_PROGRAMS = gql`
-  {
-    programs(orderBy:name_ASC) {
-      id
-      name
-    }
-  }
-`;
-const CREATE_STUDENT=gql`
-    mutation CREATE_STUDENT(
-        $id:ID!,$firstName:String!,$lastName:String!,$password:String!,
-        $email:String!,$program_id:ID){
-        createStudent(data:{
-            id:$id
-            firstName:$firstName
-            LastName:$lastName
-            email:$email
-            password:$password
-            status:"full-time"
-            program:{
-                connect:{id:$program_id}
-            }
-        }){
-            id
-            firstName
-            LastName
-            email
-            program{
-                name
-            }
-        }
-    }
+import { GET_PROGRAMS, CREATE_STUDENT } from '../Query';
 
-`;
 interface Props {
     
 }
