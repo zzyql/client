@@ -21,7 +21,7 @@ export const Routes: React.FunctionComponent<RouteProps> = (childProps) =>
   <Switch>
     <Route path="/" exact render={(props) => <Home {...props} {...childProps} />}/>
     <Route path='/signup' exact render={(props) => <Signup {...props} {...childProps} />}/>
-    <Route path='/login' exact render={(props) => <Login {...props} {...childProps} />}/>
+    <Route path='/login' exact component={Login}/>
 
     <Route path="/program/create" exact component={CreateProgram} />
     <Route path="/programs" exact component={ProgramList} />

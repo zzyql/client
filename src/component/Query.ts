@@ -279,3 +279,25 @@ export const CREATE_ENROLLMENT=gql`
 
 
 `;
+
+
+
+export const LOGIN=gql`
+    mutation LOGIN($email:String!,$password: String!){
+        login(data:{
+            email: $email
+            password: $password
+        }){
+            Faculty{
+                id,
+                firstName,
+                LastName,
+                email
+            },
+            token
+        }
+
+    }
+
+
+`;

@@ -6,12 +6,12 @@ import { getMainDefinition } from 'apollo-utilities';
 import { ApolloClient } from "apollo-client";
 
 const httpLink = new HttpLink({
-  uri: 'https://pi-project-097921097e.herokuapp.com/pi-project/dev'
+  uri: 'https://murmuring-fortress-24950.herokuapp.com/'
 });
   
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: 'wss://pi-project-097921097e.herokuapp.com/pi-project/dev',
+  uri: 'wss://murmuring-fortress-24950.herokuapp.com/',
   options: {
     reconnect: true
   }
