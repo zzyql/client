@@ -22,6 +22,7 @@ export const GET_STUDENT=gql`
             name
         }
         enrollments{
+            id
             course{
                 id
                 name
