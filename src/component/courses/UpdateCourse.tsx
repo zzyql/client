@@ -33,10 +33,11 @@ interface Props {
 //this component get program type as props and display program infomation
 export default function UpdateCourse(props: Props): ReactElement {
 
-  
-  const [name, setName] = useState(props.course.name)
-  const [id, setID] = useState(props.course.id)
-  const [program,setProgram]=useState(props.course.program.name)
+  const course=props.course
+  const [name, setName] = useState(course.name)
+  const [id, setID] = useState(course.id)
+  const [program,setProgram]=useState(course.program.name)
+  const [NOS, setNOS] = useState(course.numOfStudent)
 
   const result=useQuery<ProgramData,ProgramVars>(GET_PROGRAMS)
   const [saveCourse, { error, data }]=  useMutation<CourseData,CourseVars>(
@@ -66,6 +67,13 @@ export default function UpdateCourse(props: Props): ReactElement {
     label="Course ID"
     value={id}
     onChange={e=>setID(e.target.value)}
+    />
+    <br/>
+    <TextField 
+    placeholder="Enter Number of Student"
+    label="Number of Student"
+    value={NOS}
+    onChange={e=>setNOS(Number(e.target.value))}
     />
     <br/>
     Current program is {props.course.program.name}
