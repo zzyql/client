@@ -26,7 +26,7 @@ export const GET_STUDENT=gql`
             course{
                 id
                 name
-                attendances(orderBy:time_ASC){
+                attendances{
                     time
                 }
             }

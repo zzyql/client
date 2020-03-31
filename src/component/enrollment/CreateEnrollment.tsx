@@ -9,6 +9,7 @@ import SelectProgram from '../common/SelectProgram';
 import SelectCourses from '../common/SelectCourses';
 interface Props {
     student_id:string
+
 }
 
 
@@ -20,6 +21,8 @@ interface EnrollmentVars{
 }
 
 export default function CreateEnrollment(props: Props): ReactElement {
+
+
 
     const [id, setID] = useState(props.student_id)
     const [program, setProgram] = useState("")
