@@ -12,6 +12,7 @@ import Student from "./component/students/Student";
 import CreateProgram from "./component/programs/CreateProgram";
 import CreateCourse from "./component/courses/CreateCourse";
 import UpdateProgram from "./component/programs/UpdateProgram";
+import Enrollment from "./component/enrollment/Enrollment";
 interface RouteProps {
   isAuthenticated: boolean;
   userHasAuthenticated: (authenticated: boolean) => void;
