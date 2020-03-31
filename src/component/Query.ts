@@ -21,14 +21,7 @@ export const GET_STUDENT=gql`
             id
             name
         }
-        enrollments(where:{
-            course:{
-                enrollments_every:{
-                    student:{id:"1111111"}
-                }
-            }
-        }){
-            id
+        enrollments{
             course{
                 id
                 name

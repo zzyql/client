@@ -55,6 +55,7 @@ export default function Student(props: Props): ReactElement {
             {data && data.student.enrollments.map(enrollment=>(
                 
                 <List>
+                
                     <ListItem button onClick={()=>(setOpen(!open))} >
                         {enrollment.course.name}
                     </ListItem>
@@ -68,6 +69,8 @@ export default function Student(props: Props): ReactElement {
                 </List>
                 
             ))}
+
+            
             <Button onClick={()=>setUpdate(!update)}>Update</Button>
             </Fragment>
           )
