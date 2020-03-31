@@ -70,24 +70,18 @@ export default function SelectCourses(props: Props): ReactElement {
         
 
         <br/>
-        <InputLabel >Course</InputLabel>
-        {console.log(result)}
-        <FormGroup row>
-            {
-                result.data?.courses?.map(course=>(
-
-                    <FormControlLabel
-                    control={
-                        <Checkbox 
-                        onChange={handleChange} 
-                        name={course.id} />
-                    }
-                    label={course.name}
-                    />
-                ))
-            }
-        </FormGroup>
-
+        <Select value={course} onChange={e=>{
+            setCourse(e.target.value as string)
+            props.onCourseClick(e.target.value as string)
+        }}>
+        {
+            result.data?.courses?.map(course=>(
+                <MenuItem  key={course.id} value={course.id}>
+                    {course.name}
+                </MenuItem >
+            ))
+        }
+        </Select>
         </div>
     )
 }

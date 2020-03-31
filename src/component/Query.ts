@@ -264,8 +264,12 @@ export const CREATE_ENROLLMENT=gql`
                 }
             }
         }){
-            student
-            course
+            student{
+                id
+            }
+            course{
+                id
+            }
         }
 
     }

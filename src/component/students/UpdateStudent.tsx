@@ -6,6 +6,7 @@ import { ProgramType, StudentType, EnrollmentType } from '../Interfaces';
 import { GET_PROGRAMS, UPDATE_STUDENT , CREATE_ENROLLMENT} from '../Query';
 import SelectProgram from '../common/SelectProgram';
 import SelectCourses from '../common/SelectCourses';
+import CreateEnrollment from '../enrollment/CreateEnrollment';
 
 interface Props {
     student:StudentType
@@ -41,24 +42,10 @@ export default function Signup(props: Props): ReactElement {
     const [password, setPassword] = useState(student.password)
     const [id, setID] = useState(student.id)
     const [email, setEmail] = useState(student.email)
-    const [courses,setCourse]=useState<string[]>();
-
-
-    function onProgramClick(program_id:string):any{
-        console.log("selected progra id is "+program_id)
-        setProgram(program_id)
-    }
-    
-
-    function onCourseClick(courses:string[]):any{
-        setCourse(courses)
-        console.log(courses)
-    }
-
+    const [addCourse,setCourse]=useState(false)
 
     const result = useQuery<ProgramListData,ProgramListVars>(GET_PROGRAMS);
 
-    {console.log(id)}
     const [saveStudent, { error, data }]=  
     useMutation<StudentData,StudentVars>(
         UPDATE_STUDENT,
@@ -75,35 +62,43 @@ export default function Signup(props: Props): ReactElement {
     return (
         <div>
         <h3>Update User</h3>
-            {error ? <p>Oh no! {error.message}</p> : null}
-            {data && data.updateStudent 
-                ? 
+            {addCourse?<CreateEnrollment student_id={id}></CreateEnrollment>:
             <div>
-            <p>Saved!</p> 
-            <Typography variant="h5" gutterBottom>
-                Student ID: {data && data.updateStudent.id}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-                Student name: {data && data.updateStudent.firstName} {data.updateStudent.LastName}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-                Student Email: {data && data.updateStudent.email}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-                Status: {data && data.updateStudent.status}
-            </Typography>
-            </div>
-                : 
-            <div>
-                <form>
-                <TextField
+                {error ? <p>Oh no! {error.message}</p> : null}
+                {data && data.updateStudent 
+                    ? 
+                <div>
+                <p>Saved!</p> 
+                <Typography variant="h5" gutterBottom>
+                    Student ID: {data && data.updateStudent.id}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                    Student name: {data && data.updateStudent.firstName} {data.updateStudent.LastName}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                    Student Email: {data && data.updateStudent.email}
+                </Typography>
+                <Typography variant="h5" gutterBottom>
+                    Status: {data && data.updateStudent.status}
+                </Typography>
+                </div>
+                    : 
+                <div>
+                
+                <Button color="primary" variant="text" onClick={() => 
+                    setCourse(true) }>
+                    Add courese
+                </Button>
+                <br/>
+
+                    <TextField
                     disabled
                     placeholder="Enter your ID"
                     label="ID"
                     value={id}
                     />
-                <br/>
-                <TextField
+                    <br/>
+                    <TextField
                     placeholder="Enter your first name"
                     label="First Name"
                     value={firstName}
@@ -112,44 +107,43 @@ export default function Signup(props: Props): ReactElement {
 
                         }}
                     />
-                <br/>
-                <TextField
-                placeholder="Enter your last name"
-                label="Last Name"
-                value={lastName}
-                onChange={e=>{
-                    setLastName(e.target.value)
+                    <br/>
+                    <TextField
+                    placeholder="Enter your last name"
+                    label="Last Name"
+                    value={lastName}
+                    onChange={e=>{
+                        setLastName(e.target.value)
 
-                }}
-                />
-                <br/>
-                <TextField
-                placeholder="Enter your password"
-                type="password"
-                label="Password"
-                value={password}
-                onChange={e=>{
-                    setPassword(e.target.value)
+                    }}
+                    />
+                    <br/>
+                    <TextField
+                    placeholder="Enter your password"
+                    type="password"
+                    label="Password"
+                    value={password}
+                    onChange={e=>{
+                        setPassword(e.target.value)
 
-                }}
-                />
-                <br/>
-
-                <TextField
-                disabled
-                placeholder="Enter your email"
-                label="Email"
-                value={email}
-                />
+                    }}
+                    />
+                    <br/>
+                    <TextField
+                    disabled
+                    placeholder="Enter your email"
+                    label="Email"
+                    value={email}
+                    />
+                    <br/>
+                    
+                    <Button color="primary" variant="text" onClick={() => 
+                        id && firstName && lastName && password && program && saveStudent() }>
+                        Update User
+                    </Button>
+                </div>
                 
-                <br/>
-                <SelectCourses onProgramClick={onProgramClick} onCourseClick={onCourseClick}/>
-                <br/>
-                <Button color="primary" variant="text" onClick={() => 
-                    id && firstName && lastName && password && program && saveStudent() }>
-                    Update User
-                </Button>
-            </form>
+                }
             </div>
             }
         </div>

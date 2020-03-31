@@ -34,14 +34,16 @@ export default function Student(props: Props): ReactElement {
     if(!sub.loading) refetch()
     const [open, setOpen] = useState(true);
     const [update,setUpdate]=useState(false);
+
     return (
         <div>
-        {update ? (
-            
-           data && <UpdateStudent student={data.student}></UpdateStudent>
-          ) : (
+        {
+        update 
+            ? 
+        (data && <UpdateStudent student={data.student}></UpdateStudent>) 
+            : 
+        (
             <Fragment>
-            
             {console.log(data)}
             <Typography variant="h5" gutterBottom>
                 {data && data.student.firstName} {data && data.student.LastName}
@@ -66,9 +68,10 @@ export default function Student(props: Props): ReactElement {
                 </List>
                 
             ))}
-            <Button onClick={()=>setUpdate(!update)}>update</Button>
+            <Button onClick={()=>setUpdate(!update)}>Update</Button>
             </Fragment>
-          )}
+          )
+        }
         </div>
     )
 }
