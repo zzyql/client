@@ -1,10 +1,10 @@
-import React, { ReactElement, Fragment } from 'react'
+import React, { ReactElement, Fragment, useState } from 'react'
 import { StudentType,AttendanceSubscriptionPayload } from '../Interfaces'
 import { useQuery,useSubscription } from '@apollo/react-hooks'
 import  gql  from 'graphql-tag';
 
-import {List,ListItem,Collapse,Typography} from '@material-ui/core';
-
+import {List,ListItem,Collapse,Typography, Button} from '@material-ui/core';
+import UpdateStudent from './UpdateStudent'
 
 import Attendance from '../attendances/Attendance';
 import { GET_ATTENDANCE, GET_STUDENT } from '../Query';
@@ -32,11 +32,13 @@ export default function Student(props: Props): ReactElement {
     )
     const sub=useSubscription<CheckIn>(GET_ATTENDANCE);
     if(!sub.loading) refetch()
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
+    const [update,setUpdate]=useState(false);
     return (
         <div>
-        {loading ? (
-            <p>Loading ...</p>
+        {update ? (
+            
+           data && <UpdateStudent student={data.student}></UpdateStudent>
           ) : (
             <Fragment>
             
@@ -64,7 +66,7 @@ export default function Student(props: Props): ReactElement {
                 </List>
                 
             ))}
-            
+            <Button onClick={()=>setUpdate(!update)}>update</Button>
             </Fragment>
           )}
         </div>

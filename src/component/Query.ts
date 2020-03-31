@@ -67,6 +67,33 @@ export const CREATE_STUDENT=gql`
     }
 
 `;
+export const UPDATE_STUDENT=gql`
+    mutation UPDATE_STUDENT(
+        $id:ID!,$firstName:String!,$lastName:String!,$password:String!,
+        $program_id:ID){
+        updateStudent(
+            where:{id:$id},
+            data:{
+                firstName:$firstName
+                LastName:$lastName
+                password:$password
+                status:"full-time"
+                program:{
+                    connect:{id:$program_id}
+                }
+            }
+        ){
+            id
+            firstName
+            LastName
+            email
+
+        }
+    }
+
+`;
+
+
 
 export const GET_ATTENDANCE=gql`
     subscription GET_ATTENDANCE{
@@ -175,6 +202,20 @@ export const GET_COURSES = gql`
   }
 `;
 
+export const GET_COURSES_BY_PROGRAM_ID = gql`
+  query GET_COURSES_BY_PROGRAM_ID($program_id:ID)
+  {
+    courses(where:{
+        program:{
+            id:$program_id
+        }
+    }){
+      id
+      name
+    }
+  }
+`;
+
 export const GET_COURSE = gql`
   query Get_COURSE($coure_id: ID!) {
     course(where: {id:$coure_id}) {
@@ -206,5 +247,28 @@ export const UPDATE_COURSE=gql`
             name
         }
     }
+
+`;
+
+export const CREATE_ENROLLMENT=gql`
+    mutation CREATE_ENROLLMENT($student_id:ID,$course_id:ID){
+        createEnrollment(data:{
+            student:{
+                connect:{
+                    id:$student_id
+                }
+            }
+            course:{
+                connect:{
+                    id:$course_id
+                }
+            }
+        }){
+            student
+            course
+        }
+
+    }
+
 
 `;

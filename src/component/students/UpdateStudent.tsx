@@ -2,12 +2,13 @@ import React, { ReactElement, useState } from 'react'
 import { TextField, Button, InputLabel, Select, MenuItem, Typography } from '@material-ui/core'
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { ProgramType, StudentType } from '../Interfaces';
-import { GET_PROGRAMS, CREATE_STUDENT } from '../Query';
+import { ProgramType, StudentType, EnrollmentType } from '../Interfaces';
+import { GET_PROGRAMS, UPDATE_STUDENT , CREATE_ENROLLMENT} from '../Query';
 import SelectProgram from '../common/SelectProgram';
+import SelectCourses from '../common/SelectCourses';
 
 interface Props {
-    
+    student:StudentType
 }
 interface ProgramListData {
     programs: ProgramType[];
@@ -17,89 +18,98 @@ interface ProgramListVars {
 
 }
 interface StudentData {
-    createStudent: StudentType;
+    updateStudent: StudentType;
 }
   
 interface StudentVars {
 
 }
 
-export default function Signup({}: Props): ReactElement {
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [program, setProgram] = useState("")
-    const [password, setPassword] = useState("")
-    const [id, setID] = useState("")
-    const [email, setEmail] = useState("")
+interface EnrollmentData {
+    enrollment:EnrollmentType;
+}
+  
+interface EnrollmentVars {
+
+}
+
+export default function Signup(props: Props): ReactElement {
+    const student=props.student
+    const [firstName, setFirstName] = useState(student.firstName)
+    const [lastName, setLastName] = useState(student.LastName)
+    const [program, setProgram] = useState(student.program.id)
+    const [password, setPassword] = useState(student.password)
+    const [id, setID] = useState(student.id)
+    const [email, setEmail] = useState(student.email)
+    const [courses,setCourse]=useState<string[]>();
+
 
     function onProgramClick(program_id:string):any{
+        console.log("selected progra id is "+program_id)
         setProgram(program_id)
     }
     
+
+    function onCourseClick(courses:string[]):any{
+        setCourse(courses)
+        console.log(courses)
+    }
+
+
     const result = useQuery<ProgramListData,ProgramListVars>(GET_PROGRAMS);
 
+    {console.log(id)}
     const [saveStudent, { error, data }]=  
     useMutation<StudentData,StudentVars>(
-        CREATE_STUDENT,
+        UPDATE_STUDENT,
         {variables:{
             id:id,
             firstName:firstName,
             lastName:lastName,
             password:password,
-            email:email,
             program_id:program
         }}
     )
 
-    const genID=(min:number,max:number)=>{
-        const user_id="999"+String(Math.floor(Math.random() * (max - min)) + min);
-        
-        setID(user_id)
-        console.log(user_id)
-        return user_id
-    }
-    
-    const genEmail=(firstName:string,lastName:string,id:string)=>{
-        
-        const email= firstName[0]+
-                lastName+
-                id.substring(3)+
-                "@conestogac.on.ca";
-        setEmail(email)
-        console.log(email)
-        return email
-    }
+
     return (
         <div>
-        <h3>Sign Up</h3>
+        <h3>Update User</h3>
             {error ? <p>Oh no! {error.message}</p> : null}
-            {data && data.createStudent 
+            {data && data.updateStudent 
                 ? 
             <div>
             <p>Saved!</p> 
             <Typography variant="h5" gutterBottom>
-                Student ID: {data && data.createStudent.id}
+                Student ID: {data && data.updateStudent.id}
             </Typography>
             <Typography variant="h5" gutterBottom>
-                Student name: {data && data.createStudent.firstName} {data.createStudent.LastName}
+                Student name: {data && data.updateStudent.firstName} {data.updateStudent.LastName}
             </Typography>
             <Typography variant="h5" gutterBottom>
-                Student Email: {data && data.createStudent.email}
+                Student Email: {data && data.updateStudent.email}
             </Typography>
             <Typography variant="h5" gutterBottom>
-                Status: {data && data.createStudent.status}
+                Status: {data && data.updateStudent.status}
             </Typography>
             </div>
                 : 
             <div>
                 <form>
                 <TextField
+                    disabled
+                    placeholder="Enter your ID"
+                    label="ID"
+                    value={id}
+                    />
+                <br/>
+                <TextField
                     placeholder="Enter your first name"
                     label="First Name"
                     value={firstName}
                     onChange={e=>{
                         setFirstName(e.target.value)
-                        genEmail(firstName,lastName,genID(1111,9999))
+
                         }}
                     />
                 <br/>
@@ -109,7 +119,7 @@ export default function Signup({}: Props): ReactElement {
                 value={lastName}
                 onChange={e=>{
                     setLastName(e.target.value)
-                    genEmail(firstName,lastName,genID(1111,9999))
+
                 }}
                 />
                 <br/>
@@ -120,16 +130,24 @@ export default function Signup({}: Props): ReactElement {
                 value={password}
                 onChange={e=>{
                     setPassword(e.target.value)
-                    genEmail(firstName,lastName,genID(1111,9999))
+
                 }}
                 />
                 <br/>
-                <SelectProgram programs={result.data?.programs} onProgramClick={onProgramClick}/>
+
+                <TextField
+                disabled
+                placeholder="Enter your email"
+                label="Email"
+                value={email}
+                />
+                
+                <br/>
+                <SelectCourses onProgramClick={onProgramClick} onCourseClick={onCourseClick}/>
                 <br/>
                 <Button color="primary" variant="text" onClick={() => 
-                    
-                    id && firstName && lastName && email && program && saveStudent()}>
-                    Sign Up
+                    id && firstName && lastName && password && program && saveStudent() }>
+                    Update User
                 </Button>
             </form>
             </div>
@@ -137,4 +155,5 @@ export default function Signup({}: Props): ReactElement {
         </div>
     )
 }
+
 

@@ -5,6 +5,7 @@ import { useMutation, useQuery  } from '@apollo/react-hooks';
 
 import {CourseType,ProgramType} from '../Interfaces'
 import {CREATE_COURSE,GET_PROGRAMS} from '../Query'
+import SelectProgram from '../common/SelectProgram';
 interface Props {
     
 }
@@ -35,7 +36,9 @@ export default function CreateProgram({}: Props): ReactElement {
     const [numOfStudent, setNOS] = useState("")
     const [program, setProgram] = useState("")
     
-
+    function onProgramClick(program_id:string):any{
+        setProgram(program_id)
+    }
     const [saveCourse, { error, data }]=  useMutation<CourseData,CourseVars>(
         CREATE_COURSE,
         {variables:{id:id,name:name,NOS:Number(numOfStudent),program_id:program}}
@@ -47,10 +50,10 @@ export default function CreateProgram({}: Props): ReactElement {
         <div>
         <h3>Add a Course</h3>
         {error ? <p>Oh no! {error.message}</p> : null}
-        {data && data.createCourse ? 
-        
-        <p>Saved!</p> : 
-
+        {data && data.createCourse 
+            ? 
+        <p>Saved!</p> 
+            : 
         <form>
         <div className="CreateCourse">
         <TextField
@@ -75,22 +78,8 @@ export default function CreateProgram({}: Props): ReactElement {
         />
         <br/>
        
-        <InputLabel >Program</InputLabel>
-        <Select value={program} onChange={(e)=>setProgram(e.target.value as string)}>
-        {result.loading?(
-                <MenuItem  disabled>loading....</MenuItem >
-        ):(
-            result.data?.programs.map(program=>(
-                <MenuItem  key={program.id} value={program.id}>
-                    {program.name}
-                </MenuItem >
-            ))
-        )}
-        </Select>
-
-    
-
-
+        <SelectProgram programs={result.data?.programs} onProgramClick={onProgramClick}/>
+ 
         <br/>
         <Button color="primary" variant="text" onClick={() => id && name && numOfStudent && program && saveCourse()}>
             Create Course

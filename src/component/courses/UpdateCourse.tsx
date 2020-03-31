@@ -2,11 +2,11 @@ import React, { ReactElement, Fragment,useState } from 'react'
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import gql from 'graphql-tag';
 import { useLazyQuery ,useQuery, useMutation} from '@apollo/react-hooks';
-import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem, TextField, Button} from '@material-ui/core';
+import {ExpansionPanel ,ExpansionPanelSummary ,ExpansionPanelDetails ,Typography ,List,ListItem, TextField, Button, InputLabel, MenuItem, Select} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { NavLink, withRouter, Route } from "react-router-dom";
 import {ProgramType, CourseType} from '../Interfaces'
-import {UPDATE_COURSE}from '../Query'
+import {UPDATE_COURSE, GET_PROGRAMS}from '../Query'
 import Course from '../courses/Course';
 
 
@@ -17,6 +17,13 @@ interface CourseData {
 interface CourseVars {
     id: string;
     name:string;
+}
+interface ProgramData {
+    programs: ProgramType[];
+}
+  
+interface ProgramVars {
+
 }
 interface Props {
     course:CourseType;
@@ -29,7 +36,9 @@ export default function UpdateCourse(props: Props): ReactElement {
   
   const [name, setName] = useState(props.course.name)
   const [id, setID] = useState(props.course.id)
+  const [program,setProgram]=useState(props.course.program.name)
 
+  const result=useQuery<ProgramData,ProgramVars>(GET_PROGRAMS)
   const [saveCourse, { error, data }]=  useMutation<CourseData,CourseVars>(
     UPDATE_COURSE,
     {variables:{id:id,name:name}}
@@ -58,6 +67,23 @@ export default function UpdateCourse(props: Props): ReactElement {
     value={id}
     onChange={e=>setID(e.target.value)}
     />
+    <br/>
+    Current program is {props.course.program.name}
+
+    <InputLabel >Program</InputLabel>
+        <Select value={program} onChange={(e)=>setProgram(e.target.value as string)}>
+        {result.loading?(
+                <MenuItem  disabled>loading....</MenuItem >
+        ):(
+            result.data?.programs.map(program=>(
+                <MenuItem  key={program.id} value={program.id}>
+                    {program.name}
+                </MenuItem >
+            ))
+        )}
+        </Select>
+
+
     <br/>
     <Button color="primary" variant="text" onClick={() => id && name &&  saveCourse()}>
         Update Course
