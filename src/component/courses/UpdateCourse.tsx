@@ -17,6 +17,8 @@ interface CourseData {
 interface CourseVars {
     id: string;
     name:string;
+    numOfStudent:number
+    program:string
 }
 interface ProgramData {
     programs: ProgramType[];
@@ -42,12 +44,12 @@ export default function UpdateCourse(props: Props): ReactElement {
   const result=useQuery<ProgramData,ProgramVars>(GET_PROGRAMS)
   const [saveCourse, { error, data }]=  useMutation<CourseData,CourseVars>(
     UPDATE_COURSE,
-    {variables:{id:id,name:name}}
+    {variables:{id:id,name:name,numOfStudent:NOS, program:program}}
   )
 
   return (
     <div>
-    <h3>Update a Program</h3>
+    <h3>Update a Course</h3>
     {error ? <p>Oh no! {error.message}</p> : null}
     {data && data.updateCourse 
         ? 
@@ -93,7 +95,7 @@ export default function UpdateCourse(props: Props): ReactElement {
 
 
     <br/>
-    <Button color="primary" variant="text" onClick={() => id && name &&  saveCourse()}>
+    <Button color="primary" variant="text" onClick={() => id && name && NOS && program && saveCourse()}>
         Update Course
     </Button>
     </div>

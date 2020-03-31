@@ -239,12 +239,21 @@ export const GET_COURSE = gql`
 
 
 export const UPDATE_COURSE=gql`
-    mutation UPDATE_COURSE($id:ID!,$name:String!){
+    mutation UPDATE_COURSE($id:ID!,$name:String!,$NOS:Int,$program:ID){
         updateCourse(where:{id:$id},
-            data:{name:$name}
+            data:{
+                name:$name
+                numOfStudent:$NOS
+                program:{
+                    connect:{
+                        id:$program
+                    }
+                }
+            }
         ){
             id
             name
+            numOfStudent
         }
     }
 
